@@ -1,5 +1,4 @@
 import React from "react";
-import classNames from "classnames";
 import DayListItem from "./DayListItem";
 
 export default function DayList(props) {
@@ -11,10 +10,10 @@ const parsedDayList = DayListArray.map((dayList)=> {return (
     name={dayList.name}
     spots={dayList.spots}
     selected={dayList.name === props.day}
-    setDay={dayList.setDay}
+    setDay={props.setDay}
   />
 )})
-console.log("hm", parsedDayList)
+
 
   return (
     <ul >
