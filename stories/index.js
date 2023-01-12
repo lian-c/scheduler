@@ -5,11 +5,12 @@ import { action } from "@storybook/addon-actions";
 
 import "index.scss";
 
-import Button from "components/Button";
-import DayListItem from "components/DayListItem"
-import DayList from "components/DayList"
-import InterviewerListItem from "components/InterviewerListItem"
-import InterviewerList from "components/InterviewerList"
+import Button from "components/Button.jsx";
+import DayListItem from "components/DayListItem.jsx"
+import DayList from "components/DayList.jsx"
+import InterviewerListItem from "components/InterviewerListItem.jsx"
+import InterviewerList from "components/InterviewerList.jsx"
+import Appointment from "components/Appointment/index.jsx";
 
 storiesOf("Button", module)
   .addParameters({
@@ -57,18 +58,18 @@ storiesOf("Button", module)
   ];
   
   storiesOf("DayList", module)
-    .addParameters({
-      backgrounds: [{ name: "dark", value: "#222f3e", default: true }],
-    })
-    .add("Monday", () => (
-      <DayList days={days} day={"Monday"} setDay={action("setDay")} />
-    ))
-    .add("Tuesday", () => (
-      <DayList days={days} day={"Tuesday"} setDay={action("setDay")} />
-    ))
-    .add("Wednesday", () => (
-        <DayList days={days} day={"Wednesday"} setDay={action("setDay")} />
-    ));
+  .addParameters({
+    backgrounds: [{ name: "dark", value: "#222f3e", default: true }],
+  })
+  .add("Monday", () => (
+    <DayList days={days} value={"Monday"} onChange={action("setDay")} />
+  ))
+  .add("Tuesday", () => (
+    <DayList days={days} value={"Tuesday"} onChange={action("setDay")} />
+  ))
+  .add("Wednesday", () => (
+    <DayList days={days} value={"Wednesday"} onChange={action("setDay")} />
+  ));
 
     const interviewer = {
       id: 1,
@@ -112,24 +113,30 @@ storiesOf("Button", module)
       ];
       
       storiesOf("InterviewerList", module)
-        .addParameters({
-          backgrounds: [{ name: "dark", value: "#222f3e", default: true }]
-        })
-        .add("Initial", () => (
-          <InterviewerList
-            interviewers={interviewers}
-          />
-          //this is passing info to InterviewerList file
-        ))
-        .add("Selected", () => (
-          <InterviewerList
-            interviewers={interviewers}
-            interviewer={3}
-          />
-        ))
-        .add("Clickable", () => (
-          <InterviewerList
-            interviewers={interviewers}
-            setInterviewer={action("setInterviewer")}
-          />
-        ));
+      .addParameters({
+        backgrounds: [{ name: "dark", value: "#222f3e", default: true }]
+      })
+      .add("Initial", () => (
+        <InterviewerList
+          interviewers={interviewers}
+        />
+      ))
+      .add("Selected", () => (
+        <InterviewerList
+          interviewers={interviewers}
+          value={3}
+        />
+      ))
+      .add("Clickable", () => (
+        <InterviewerList
+          interviewers={interviewers}
+          onChange={action("setInterviewer")}
+        />
+      ));
+
+      storiesOf("Appointment", module)
+      .addParameters({
+        backgrounds:[{name: "white", value:"#fff", default: true}]
+      })
+      .add("Appointment", () => <Appointment /> )
+      .add("Appointment with Time", () => <Appointment time="12pm" />)   
