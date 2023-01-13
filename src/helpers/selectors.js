@@ -43,6 +43,6 @@ state.days.map(days => {
 return result;
 };
 
-console.log(getAppointmentsForDay(state,"Monday"))
+// console.log(getAppointmentsForDay(state,"Monday"))
 module.exports = { getAppointmentsForDay };
 
