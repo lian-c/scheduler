@@ -4,12 +4,12 @@ import DayListItem from "./DayListItem.jsx";
 export default function DayList(props) {
 const DayListArray = props.days
 
-const parsedDayList = DayListArray.map((dayList)=> {return (
+const parsedDayList = DayListArray.map((day)=> {return (
   <DayListItem
-  key={dayList.id}
-    name={dayList.name}
-    spots={dayList.spots}
-    selected={dayList.name === props.value}
+  key={day.id}
+    name={day.name}
+    spots={day.spots}
+    selected={day.name === props.value}
     setDay={props.onChange}
   />
 )})
