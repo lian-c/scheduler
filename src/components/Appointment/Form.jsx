@@ -24,7 +24,7 @@ const cancel = () => {
   <form onSubmit={event => event.preventDefault()}>
       <input
         className="appointment__create-input text--semi-bold"
-    
+        key={props.key}
         type="text"
         placeholder="Enter Student Name"
         value={student}
@@ -44,7 +44,7 @@ const cancel = () => {
   <section className="appointment__card-right">
     <section className="appointment__actions">
       <Button danger onClick={cancel}>Cancel</Button>
-      <Button confirm onClick={props.onSave}>Save</Button>
+      <Button confirm onClick={()=>{props.bookInterview(props.apptId,props.onSave(student,interviewer))}}>Save</Button>
     </section>
   </section>
 </main>
