@@ -3,12 +3,13 @@ const state = {
     {
       id: 1,
       name: "Monday",
-      appointments: [1, 2, 3],
+      interviewers:[1,2]
     },
     {
       id: 2,
       name: "Tuesday",
       appointments: [4, 5],
+      interviewers:[1,2]
     },
   ],
   appointments: {
@@ -48,8 +49,8 @@ const getAppointmentsForDay = (state, day) => {
       for (let id of apptArray) {
         result.push(state.appointments[id]);
       }
-      return result;
     }
+    return result;
   });
   return result;
 };
@@ -61,13 +62,30 @@ const getInterview = (state, interview) => {
     (Object.values(state.interviewers)).map((interviewId) => {
       if (interviewId.id === interview.interviewer) {
         result = { ...interview, "interviewer": interviewId };
-        return result;
       }
+      return result;
     })
   }
   return result;
   };
 
-console.log(getInterview(state, state.appointments["3"]["interview"]));
 
-module.exports = { getAppointmentsForDay, getInterview };
+ 
+const getInterviewersForDay = (state, day) => {
+  const result = [];
+  state.days.map((days) => {
+    if (days.name === day) {
+      const interviewArray = days.interviewers;
+      for (let id of interviewArray) {
+        result.push(state.interviewers[id]);
+      }
+    }
+    return result;
+  });
+  return result;
+};
+
+getInterviewersForDay(state,"Monday")
+
+
+module.exports = { getAppointmentsForDay, getInterview , getInterviewersForDay };
