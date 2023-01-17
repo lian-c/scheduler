@@ -9,7 +9,7 @@ export default function useApplicationData() {
   });
   const setDay = (day) => setState({ ...state, day });
 
-  let updatedDays; //global for setState in cancel/book interview
+  let newDay; //global for setState in cancel/book interview
 
   const updateSpots = (state, appointments, id) => {
     console.log("og", state.days);
@@ -29,7 +29,7 @@ export default function useApplicationData() {
       count -= 1; //not existing so adding appointment spot should decrease
     }
 
-    updatedDays = daysCopy.map((day) => {
+    const updatedDays = daysCopy.map((day) => {
       if (day.name === state.day) {
         daysCopy = { ...day, spots: count };
         return daysCopy;
@@ -38,6 +38,7 @@ export default function useApplicationData() {
       }
     });
     console.log(updatedDays);
+    newDay = updatedDays
     return updatedDays;
   };
 
@@ -72,8 +73,8 @@ export default function useApplicationData() {
 
     return axios.delete(`/api/appointments/${id}`).then((response) => {
       updateSpots(state, appointments, id);
-      console.log(updatedDays);
-      setState({ ...state, appointments, days: updatedDays });
+      console.log(newDay);
+      setState({ ...state, appointments, days: newDay });
       return response;
     });
   };
@@ -92,7 +93,7 @@ export default function useApplicationData() {
       .put(`/api/appointments/${id}`, { interview })
       .then((response) => {
         updateSpots(state, appointments, id);
-        setState({ ...state, appointments, days: updatedDays });
+        setState({ ...state, appointments, days: newDay });
         return response;
       });
   };
