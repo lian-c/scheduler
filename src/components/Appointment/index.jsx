@@ -5,6 +5,7 @@ import Empty from "./Empty";
 import Form from "./Form";
 import Status from "./Status";
 import Confirm from "./Confirm";
+import Error from "./Error";
 
 import useVisualMode from "hooks/useVisualMode";
 import "./styles.scss";
@@ -15,6 +16,8 @@ const CREATE = "CREATE";
 const SAVING = "SAVING";
 const CONFIRM = "CONFIRM"
 const EDIT = "EDIT"
+const ERROR_SAVE = "ERROR_SAVE";
+const ERROR_DELETE = "ERROR_DELETE";
 
 export default function Appointment(props) {
   const { mode, transition, back } = useVisualMode(
@@ -22,22 +25,35 @@ export default function Appointment(props) {
   );
 
  function save(name, interviewer) {
-  transition(SAVING)
-  const interview = {
-      student: name,
-      interviewer,
+   const interview = {
+     student: name,
+     interviewer,
     };
+    transition(SAVING)
   props.bookInterview(props.id, interview)
     .then(() => transition(SHOW))
+    .catch(error => {
+      console.log(error);
+      transition(ERROR_SAVE, true);
+  });
   }
 
   function confirming() {
     return transition(CONFIRM)
   }
 
+// function onDelete(){
+//   props.cancelInterview(props.id)
+//   .then(() => transition(EMPTY))
+//   .catch(error => console.log("ondelete error", error));
+// }
 function onDelete(){
-  props.cancelInterview(props.id)
-  transition(EMPTY)
+  return props.cancelInterview(props.id)
+  .then(() => transition(EMPTY))
+  .catch(error => {
+    console.log(error);
+    transition(ERROR_SAVE, true);
+  });
 }
 
 function onEdit() {
@@ -70,7 +86,19 @@ function onEdit() {
       )}
       {mode === SAVING && (
         <Status
-        message="Saving"
+        message={SAVING}
+        />
+      )}
+      {mode === ERROR_DELETE && (
+        <Error
+        onClose={back}
+        message={ERROR_DELETE}
+        />
+      )}
+      {mode === ERROR_SAVE && (
+        <Error
+        onClose={back}
+        message={ERROR_SAVE}
         />
       )}
       {mode === EDIT && (
@@ -80,7 +108,7 @@ function onEdit() {
         onCancel={() => {
           back();
         }}
-        apptId={props.id}
+        
         onSave={save}
         student={props.interview.student}
         interviewer={props.interview.interviewer.id}

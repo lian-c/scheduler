@@ -50,7 +50,6 @@ export default function Application(props) {
           setState({...state, appointments})
           return response
         })
-        .catch(err => console.log(err))
       }
 
       const cancelInterview = (id) => {
@@ -62,14 +61,14 @@ export default function Application(props) {
           ...state.appointments,
           [id]: appointment
         };
-   
+
         return axios.delete(`/api/appointments/${id}`)
         .then(response => {
-          setState({...state, appointments})
-          return response
+          setState({...state, appointments});
+          return response;
         })
-        .catch(err => console.log(err))
-      }
+    }
+   
 
       return (
     <Appointment 
