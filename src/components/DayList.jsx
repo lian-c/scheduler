@@ -11,6 +11,7 @@ const parsedDayList = DayListArray.map((day)=> {return (
     spots={day.spots}
     selected={day.name === props.day}
     setDay={props.setDay}
+    
   />
 )})
 

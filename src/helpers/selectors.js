@@ -69,7 +69,6 @@ const getInterview = (state, interview) => {
   return result;
   };
 
-
  
 const getInterviewersForDay = (state, day) => {
   const result = [];

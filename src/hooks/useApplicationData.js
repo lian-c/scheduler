@@ -1,7 +1,18 @@
 import { useState, useEffect } from "react";
 import axios from 'axios';
 
-export default function useApplicationData(initial) {
+export default function useApplicationData() {
+
+  const updateSpots = (day, counter) => {
+   const found = state.days.find(weekday => weekday.name === day)
+   if (counter === "add" ){
+     found.spots +=1
+    console.log(found.spots)
+   } else {
+   found.spots -= 1
+   console.log(found.spots)
+   }
+  };
 
   const [state, setState] = useState({
     day: "Monday",
@@ -38,6 +49,7 @@ export default function useApplicationData(initial) {
     return axios.delete(`/api/appointments/${id}`)
     .then(response => {
       setState({...state, appointments});
+      updateSpots(state.day, "add")
       return response;
     })
 }
@@ -47,6 +59,7 @@ export default function useApplicationData(initial) {
       ...state.appointments[id],
       interview: { ...interview }
     };
+    console.log("state",state.day)
     const appointments = {
       ...state.appointments,
       [id]: appointment
@@ -54,11 +67,12 @@ export default function useApplicationData(initial) {
    return axios.put(`/api/appointments/${id}`,{interview})
     .then(response=>{
       setState({...state, appointments})
+      updateSpots(state.day, "minus")
       return response
     })
   }
   
-  return {state, setDay, bookInterview, cancelInterview};
+  return {state, setDay, bookInterview, cancelInterview, updateSpots};
   }
 
  
