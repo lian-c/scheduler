@@ -3,24 +3,30 @@ import axios from 'axios';
 
 export default function useApplicationData() {
 
-  const updateSpots = (day, counter) => {
-   const found = state.days.find(weekday => weekday.name === day)
-   if (counter === "add" ){
-     found.spots +=1
-    console.log(found.spots)
-   } else {
-   found.spots -= 1
-   console.log(found.spots)
-   }
-  };
-
+  
   const [state, setState] = useState({
     day: "Monday",
     days: [],
     appointments: {}
   });
   const setDay = day => setState({ ...state, day });
+  const found = state.days.find(weekday => weekday.name === state.day)
   
+  const updateSpots = (counter) => {
+    let count = found.spots
+    if (counter === "add" ){
+      count +=1
+      console.log("found",found)
+      found.spots = count;
+      console.log("found after",found)
+    } else {
+      count -= 1
+      console.log("found",found)
+      found.spots = count;
+      console.log("found after",found)
+
+    }
+  };
   useEffect(() => {
     Promise.all([
       axios.get('/api/days'),
@@ -48,8 +54,8 @@ export default function useApplicationData() {
 
     return axios.delete(`/api/appointments/${id}`)
     .then(response => {
+      updateSpots("add")
       setState({...state, appointments});
-      updateSpots(state.day, "add")
       return response;
     })
 }
@@ -66,8 +72,8 @@ export default function useApplicationData() {
     };
    return axios.put(`/api/appointments/${id}`,{interview})
     .then(response=>{
+      updateSpots("minus")
       setState({...state, appointments})
-      updateSpots(state.day, "minus")
       return response
     })
   }
