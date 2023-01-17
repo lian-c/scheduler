@@ -1,56 +1,67 @@
-import React from 'react'
+import React from "react";
 import Header from "./Header";
 import Show from "./Show";
 import Empty from "./Empty";
 import Form from "./Form";
+import Status from "./Status";
 
 import useVisualMode from "hooks/useVisualMode";
-import './styles.scss'
-
+import "./styles.scss";
 
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";
 const CREATE = "CREATE";
-
+const SAVING = "SAVING";
 
 export default function Appointment(props) {
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
   );
 
-  function save(name, interviewer) {
-    const interview = {
+ function save(name, interviewer) {
+  transition(SAVING)
+  const interview = {
       student: name,
-      interviewer
+      interviewer,
     };
-return (interview)
+  props.bookInterview(props.id, interview)
+    .then(() => transition(SHOW))
   }
+
+function onDelete(){
+  props.cancelInterview(props.id)
+  transition(EMPTY)
+}
 
   return (
     <article className="appointment">
-  
-<Header time={props.time}/>
-{mode === EMPTY && 
-<Empty 
-  onAdd={() =>  transition(CREATE)} 
-/>}
+      <Header time={props.time} />
+      {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
 
-{mode === CREATE && 
-<Form  interviewers={props.interviewers} 
-onSave={save} 
-onCancel={()=> {back()}} 
-bookInterview={props.bookInterview}
-apptId={props.id}
+      {mode === CREATE && (
+        <Form
+          interviewers={props.interviewers}
+          onCancel={() => {
+            back();
+          }}
+          apptId={props.id}
+          onSave={save}
+        />
+      )}
 
-/>}
+      {mode === SHOW && (
+        <Show
+          student={props.interview.student}
+          interviewer={props.interview.interviewer}
+          onDelete={onDelete}
 
-{mode === SHOW && (
-  <Show
-    student={props.interview.student}
-    interviewer={props.interview.interviewer}
-  />
-)}
-
-</article>
+        />
+      )}
+      {mode === SAVING && (
+        <Status
+        message="Saving"
+        />
+      )}
+    </article>
   );
 }

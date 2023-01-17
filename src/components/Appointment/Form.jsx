@@ -43,8 +43,8 @@ const cancel = () => {
   </section>
   <section className="appointment__card-right">
     <section className="appointment__actions">
-      <Button danger onClick={cancel}>Cancel</Button>
-      <Button confirm onClick={()=>{props.bookInterview(props.apptId,props.onSave(student,interviewer))}}>Save</Button>
+      <Button danger onClick={() =>props.onDelete()}>Cancel</Button>
+      <Button confirm onClick={()=>{props.onSave(student,interviewer)}}>Save</Button>
     </section>
   </section>
 </main>
