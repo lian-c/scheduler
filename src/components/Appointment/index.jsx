@@ -52,7 +52,7 @@ function onDelete(){
   .then(() => transition(EMPTY))
   .catch(error => {
     console.log(error);
-    transition(ERROR_SAVE, true);
+    transition(ERROR_DELETE, true);
   });
 }
 
@@ -92,13 +92,13 @@ function onEdit() {
       {mode === ERROR_DELETE && (
         <Error
         onClose={back}
-        message={ERROR_DELETE}
+        message="Error with deleting, please go back"
         />
       )}
       {mode === ERROR_SAVE && (
         <Error
         onClose={back}
-        message={ERROR_SAVE}
+        message="Error with saving, please go back"
         />
       )}
       {mode === EDIT && (
