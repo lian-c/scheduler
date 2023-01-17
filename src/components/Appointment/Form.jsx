@@ -17,7 +17,6 @@ const cancel = () => {
   props.onCancel()
 }
 
-
   return (
 <main className="appointment__card appointment__card--create">
   <section className="appointment__card-left">
@@ -26,7 +25,7 @@ const cancel = () => {
         className="appointment__create-input text--semi-bold"
         key={props.key}
         type="text"
-        placeholder="Enter Student Name"
+        placeholder={student || "Enter Student Name"} 
         value={student}
         onChange={(event) => setStudent(event.target.value)} 
         />
