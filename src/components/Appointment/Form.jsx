@@ -23,11 +23,13 @@ const cancel = () => {
   <form onSubmit={event => event.preventDefault()}>
       <input
         className="appointment__create-input text--semi-bold"
+        name="name"
         key={props.key}
         type="text"
         placeholder={student || "Enter Student Name"} 
         value={student}
         onChange={(event) => setStudent(event.target.value)} 
+        data-testid="student-name-input"
         />
     </form>
     
