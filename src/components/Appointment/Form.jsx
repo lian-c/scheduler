@@ -28,7 +28,7 @@ const validate = () => {
     setError("Please select an interviewer");
     return;
   }
-
+  setError("");
   props.onSave(student, interviewer);
 }
 
@@ -41,7 +41,7 @@ const validate = () => {
         name="name"
         key={props.key}
         type="text"
-        placeholder={student || "Enter Student Name"} 
+        placeholder={"Enter Student Name"} 
         value={student}
         onChange={(event) => setStudent(event.target.value)} 
         data-testid="student-name-input"
