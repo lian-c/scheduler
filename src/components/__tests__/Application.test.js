@@ -46,32 +46,7 @@ it("loads data, books an interview and reduces the spots remaining for Monday by
 
 });
 
-xit("loads data, books an interview and reduces the spots remaining for the first day by 1", async () => {
-  const { container } = render(<Application />);
-  console.log(prettyDOM(container))
-  // getByText, getAllByAltText,getByPlaceholderText, getByAltText
-  const onSave = jest.fn();
-  await waitForElement(() => getByText("Archie Cohen"));
 
-
-    fireEvent.click(getAllByAltText("Add")[0]); // click the first add
-
-
-
-
-    fireEvent.change(getByPlaceholderText("Enter Student Name"), {
-      target: { value: "Lydia Miller-Jones" }
-    }); // show placeholder text and add new input name
-
-  
-
-
-    fireEvent.click(getByAltText("Sylvia Palmer")); // click interviewer
-    expect(onSave).not.toHaveBeenCalled();
-
-  fireEvent.click(getByText("Save"));
-  // expect(getByText("Monday")).toHaveTextContent("0 spot remaining")
-});
 
 
 
