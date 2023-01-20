@@ -18,6 +18,7 @@ const CONFIRM = "CONFIRM"
 const EDIT = "EDIT"
 const ERROR_SAVE = "ERROR_SAVE";
 const ERROR_DELETE = "ERROR_DELETE";
+const DELETING = "Deleting"
 
 export default function Appointment(props) {
   const { mode, transition, back } = useVisualMode(
@@ -44,6 +45,7 @@ export default function Appointment(props) {
 
 
 function onDelete(){
+  transition(DELETING)
   return props.cancelInterview(props.id)
   .then(() => transition(EMPTY))
   .catch(error => {
@@ -85,6 +87,11 @@ function onEdit() {
         message={SAVING}
         />
       )}
+      {mode === DELETING && (
+        <Status
+        message={DELETING}
+        />
+      )}
       {mode === ERROR_DELETE && (
         <Error
         onClose={back}
@@ -108,7 +115,6 @@ function onEdit() {
         onSave={save}
         student={props.interview.student}
         interviewer={props.interview.interviewer.id}
-
         />
       )}
       {mode === CONFIRM && (

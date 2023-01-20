@@ -90,14 +90,12 @@ export default {
       statusText: "No Content"
     });
   }),
-delete: jest.fn((url, id, interview) => {
-
-  if (url === `/api/appointments/${id}`, {interview}) {
+delete: jest.fn(url => {
     return Promise.resolve({
       status: 204,
       statusText: "No Content"
     })
-  }
+  
 })
 
 }
