@@ -42,7 +42,7 @@ npm run cypress
 
 ## Final Product
 
-Preview of hovering over the weekday, white colouring being the selected day, and existing appointments.
+Preview of hovering over the weekday in red, white being the selected day, and existing appointments.
 !["Existing Appointments"](https://github.com/lian-c/scheduler/blob/master/public/images/appointment-existing.png)
 
 Preview of creating a new appointment
