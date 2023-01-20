@@ -12,7 +12,6 @@ export default function useApplicationData() {
   let newDay; //global for setState in cancel/book interview
 
   const updateSpots = (state, appointments, id) => {
-    // console.log("og", state.days);
     let daysCopy = [...state.days];
     const found = daysCopy.find((weekday) => weekday.name === state.day);
     let count = found.spots;
@@ -37,8 +36,8 @@ export default function useApplicationData() {
         return day;
       }
     });
-    // console.log(updatedDays);
-    newDay = updatedDays
+
+    newDay = updatedDays;
     return updatedDays;
   };
 
@@ -99,4 +98,4 @@ export default function useApplicationData() {
   };
 
   return { state, setDay, bookInterview, cancelInterview, updateSpots };
-}
+};

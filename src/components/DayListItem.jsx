@@ -27,7 +27,7 @@ export default function DayListItem(props) {
       data-testid="day"
     >
       <h2 className="text--regular">{props.name}</h2>
-       {formatSpots(props.spots)}
+      {formatSpots(props.spots)}
     </li>
   );
 }
