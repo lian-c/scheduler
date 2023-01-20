@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 
 import {getByText,
   queryByText,
@@ -96,5 +97,42 @@ it("loads data, edits an interview and keeps the spots remaining for Monday the 
       expect(getByText(day, "1 spot remaining")).toBeInTheDocument();
 })
   
-
-
+/* test number five */
+it("shows the save error when failing to save an appointment", async () => {
+  const { container, debug } = render(<Application />);
+    
+  await waitForElement(() => getByText(container, "Archie Cohen"));
+  const appointment = getAllByTestId(container, "appointment").find(
+    appointment => queryByText(appointment, "Archie Cohen")
+    );
+    fireEvent.click(getByAltText(appointment, "Edit"));
+    fireEvent.change(getByPlaceholderText(appointment,"Enter Student Name"), {
+      target: { value: "Lydia Miller-Jones" }
+    });
+    axios.put.mockRejectedValueOnce();
+    fireEvent.click(getByText(appointment, "Save"));
+    expect(getByText(appointment, "SAVING")).toBeInTheDocument();
+    await waitForElement(() => getByText(appointment,"Error with saving, please go back"));
+    fireEvent.click(getByAltText(appointment, "Close"));
+    fireEvent.click(getByText(appointment, "Cancel"));
+    expect(getByText(appointment, "Archie Cohen"));
+  });
+  
+  it("shows the delete error when failing to delete an existing appointment", async () => {
+    const { container, debug } = render(<Application />);
+    axios.delete.mockRejectedValueOnce();
+    
+    await waitForElement(() => getByText(container, "Archie Cohen"));
+    const appointment = getAllByTestId(container, "appointment").find(
+      appointment => queryByText(appointment, "Archie Cohen")
+      );
+      fireEvent.click(getByAltText(appointment, "Delete"));
+      expect(getByText(appointment, "Are you sure you want to delete this appointment"));
+      fireEvent.click(getByText(appointment, "Confirm"));
+      expect(getByText(appointment, "Deleting"));
+      await waitForElement(() => getByText(appointment, /Error with deleting, please go back/i));
+      fireEvent.click(getByAltText(appointment, "Close"));
+      fireEvent.click(getByText(appointment, "Cancel"));
+    });
+    
+    
