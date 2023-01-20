@@ -39,3 +39,15 @@ npm run storybook
 npm run cypress
 ```
 
+
+## Final Product
+
+Preview of hovering over the weekday, white colouring being the selected day, and existing appointments.
+!["Existing Appointments"](https://github.com/lian-c/scheduler/blob/master/public/images/appointment-existing.png)
+
+Preview of creating a new appointment
+!["Creating a new appointment"](https://github.com/lian-c/scheduler/blob/master/public/images/appointment-new.png)
+
+If appointment is saved before selecting an interviewer, it will display an error. This photo also showcases the delete pop up.
+!["Deleting appointment and saving without selecting interviewer"](https://github.com/lian-c/scheduler/blob/master/public/images/appointment-clickingsave-delete.png)
+
